@@ -1,0 +1,213 @@
+/* catalog-style.css */
+.catalog-page {
+    padding: 20px 0 40px;
+}
+
+.breadcrumbs {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 0.9em;
+}
+.breadcrumbs ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.breadcrumbs li {
+    display: flex;
+    align-items: center;
+}
+.breadcrumbs li a {
+    color: #ff69b4;
+    text-decoration: none;
+}
+.breadcrumbs li a:hover {
+    text-decoration: underline;
+}
+.breadcrumbs li:not(:last-child)::after {
+    content: '/';
+    margin: 0 8px;
+    color: #888;
+}
+.breadcrumbs li[aria-current="page"] {
+    color: #333;
+    font-weight: 500;
+}
+
+.catalog-layout {
+    display: flex;
+    gap: 30px;
+}
+
+.filters-sidebar {
+    flex: 0 0 260px; /* Ширина сайдбару */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    height: fit-content; 
+}
+
+.filters-sidebar h3 {
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.filter-group {
+    margin-bottom: 25px;
+}
+
+.filter-group h4 {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.filter-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.filter-group ul li {
+    margin-bottom: 8px;
+}
+
+.filter-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.95em;
+    color: #333;
+}
+
+.filter-group input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: #ff69b4; 
+}
+
+.price-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.price-filter input[type="number"] {
+    width: 80px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+.price-filter input[type="number"]::placeholder {
+    color: #aaa;
+}
+
+.apply-filters-btn, .clear-filters-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px; 
+}
+.clear-filters-btn {
+    margin-top: 10px; 
+}
+
+
+.products-listing {
+    flex-grow: 1;
+}
+
+.catalog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.catalog-header h1 {
+    margin: 0;
+    font-size: 2em;
+    font-family: 'Pacifico', cursive;
+    color: #ff69b4;
+}
+
+.sort-options label {
+    margin-right: 8px;
+    font-size: 0.95em;
+    color: #555;
+}
+
+.sort-options select {
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9em;
+    background-color: #fff;
+}
+
+/* --- СТИЛІ ДЛЯ ГРІДУ ТОВАРІВ НА СТОРІНЦІ КАТАЛОГУ --- */
+.products-listing .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* ТРИ КОЛОНКИ */
+    gap: 20px; 
+    
+.products-listing .product-card {
+   
+}
+
+
+.pagination {
+    margin-top: 30px;
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+.pagination p {
+    color: #777;
+}
+
+/* Адаптивність для сторінки каталогу */
+@media (max-width: 992px) {
+    .filters-sidebar {
+        flex-basis: 220px;
+    }
+    
+    .products-listing .product-grid {
+        /* grid-template-columns: repeat(auto-fill, minmax(230px, 280px)); */
+    }
+}
+
+@media (max-width: 768px) {
+    .catalog-layout {
+        flex-direction: column;
+    }
+    .filters-sidebar {
+        flex-basis: auto;
+        margin-bottom: 30px;
+    }
+    .catalog-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .catalog-header h1 {
+        margin-bottom: 10px;
+    }
+    /* На мобільних можемо повернутися до більш простого auto-fit,
+       якщо minmax(250px, 320px) дає занадто великі відступи або лише одну колонку.
+       Або просто залишити як є, auto-fill має впоратися. */
+    .products-listing .product-grid {
+        /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */ /* Як було раніше для мобільних, якщо потрібно */
+        justify-content: center; /* Щоб одна картка на мобільному була по центру */
+    }
+}
+}

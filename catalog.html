@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товарів - HappyKulka</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header-style.css">
+    <link rel="stylesheet" href="/css/footer-style.css">
+    <link rel="stylesheet" href="/css/catalog-style.css"> <!-- Нові стилі -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder">
+        <p style="text-align:center;padding:20px 0;background-color:#f0f0f0;">Завантаження хедера...</p>
+    </div>
+
+    <main class="catalog-page">
+        <div class="container">
+            <nav aria-label="breadcrumb" class="breadcrumbs">
+                <ol>
+                    <li><a href="index.html">Головна</a></li>
+                    <li aria-current="page">Каталог товарів</li>
+                </ol>
+            </nav>
+            
+            <div class="catalog-layout">
+                <aside class="filters-sidebar">
+                    <h3>Фільтри</h3>
+                    
+                    <div class="filter-group">
+                        <h4>Категорії</h4>
+                        <ul id="category-filter-list">
+                            <!-- <li><label><input type="checkbox" name="category" value="kulky"> Повітряні кульки</label></li> -->
+                            <!-- Категорії для фільтра будуть завантажені JS -->
+                        </ul>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Ціна</h4>
+                        <div class="price-filter">
+                            <input type="number" placeholder="Від" id="price-from">
+                            <span>-</span>
+                            <input type="number" placeholder="До" id="price-to">
+                        </div>
+                    </div>
+                     <div class="filter-group">
+                        <h4>Новинки</h4>
+                        <label><input type="checkbox" id="filter-new"> Тільки новинки</label>
+                    </div>
+                    <button class="btn btn-primary apply-filters-btn" id="apply-filters">Застосувати</button>
+                    <button class="btn btn-outline-secondary clear-filters-btn" id="clear-filters">Скинути фільтри</button>
+                </aside>
+
+                <section class="products-listing">
+                    <div class="catalog-header">
+                        <h1>Всі товари</h1>
+                        <div class="sort-options">
+                            <label for="sort-by">Сортувати:</label>
+                            <select id="sort-by" name="sort-by">
+                                <option value="default">За замовчуванням</option>
+                                <option value="price-asc">Ціна: за зростанням</option>
+                                <option value="price-desc">Ціна: за спаданням</option>
+                                <option value="name-asc">Назва: А-Я</option>
+                                <option value="name-desc">Назва: Я-А</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="product-grid" id="catalog-product-grid">
+                        <!-- Товари каталогу будуть завантажені JS -->
+                    </div>
+                    <div class="pagination">
+                        <!-- <button class="btn btn-secondary prev-page">Назад</button>
+                        <span>Сторінка <span id="current-page">1</span> з <span id="total-pages">1</span></span>
+                        <button class="btn btn-secondary next-page">Вперед</button> -->
+                        <p>Завантажено всі доступні товари.</p> <!-- Проста пагінація наразі -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder">
+         <p style="text-align:center;padding:20px 0;background-color:#f0f0f0;">Завантаження футера...</p>
+    </div>
+
+    <div id="toast-container"></div>
+    <button id="scrollToTopBtn" title="Наверх">↑</button>
+    
+    <script type="module" src="/js/main.js"></script>
+</body>
+</html>

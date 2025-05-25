@@ -1,0 +1,303 @@
+/* header-style.css */
+header {
+    background-color: #fff;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Основний хедер */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-link {
+    text-decoration: none;
+}
+
+.logo-text {
+    font-family: 'Pacifico', cursive;
+    font-size: 2em;
+    color: #333;
+}
+
+.logo-text-accent {
+    color: #ff69b4;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+header nav ul li {
+    margin-left: 25px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    margin-top: 2px;
+    right: 0;
+    background: #ff69b4;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+header nav ul li a:hover::after,
+header nav ul li a.active::after {
+    width: 100%;
+    left: 0;
+}
+
+
+header nav ul li a:hover,
+header nav ul li a.active {
+    color: #ff69b4;
+}
+
+/* Arrow for dropdown */
+header nav ul li a .arrow-down {
+    font-size: 0.7em;
+    margin-left: 4px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+/* Dropdown Menu Styles */
+header nav ul li.dropdown {
+    position: relative;
+}
+
+header nav ul li.dropdown .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    list-style: none;
+    padding: 8px 0;
+    margin: 0;
+    min-width: 220px;
+    z-index: 1001; /* Має бути вище, ніж хедер, але може бути нижче search-results */
+    border-radius: 6px;
+    opacity: 0;
+    visibility: hidden;
+    transform-origin: top center;
+    transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+    transform: translateX(-50%) scaleY(0.95);
+}
+
+header nav ul li.dropdown:hover .dropdown-menu,
+header nav ul li.dropdown.open .dropdown-menu { /* Додано .open для мобільного JS */
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scaleY(1);
+}
+
+header nav ul li.dropdown:hover > a .arrow-down,
+header nav ul li.dropdown.open > a .arrow-down { /* Додано .open для мобільного JS */
+    transform: rotate(180deg);
+}
+
+header nav ul li.dropdown .dropdown-menu li {
+    margin: 0;
+    width: 100%;
+}
+
+header nav ul li.dropdown .dropdown-menu li a {
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    font-weight: 400;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+header nav ul li.dropdown .dropdown-menu li a:hover {
+    background-color: #f9f9f9;
+    color: #ff69b4;
+}
+header nav ul li.dropdown .dropdown-menu li a::after {
+    display: none;
+}
+
+
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
+/* --- СТИЛІ ДЛЯ ПОШУКОВОГО РЯДКА ТА ВИПАДАЮЧОГО СПИСКУ --- */
+.search-container {
+    position: relative; 
+    margin-right: 15px; 
+}
+
+.search-bar { 
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 0.9em;
+    width: 180px; 
+    box-sizing: border-box; 
+    transition: width 0.3s ease, border-color 0.3s ease;
+}
+.search-bar:focus {
+    width: 250px; 
+    border-color: #ff69b4;
+    outline: none;
+}
+
+.search-results-dropdown {
+    display: none; 
+    position: absolute;
+    top: calc(100% + 2px); 
+    left: 0;
+    width: 100%; 
+    min-width: 280px; /* Збільшено мінімальну ширину для кращого вигляду з зображеннями */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 6px 6px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1010; /* Найвищий z-index у хедері */
+    max-height: 350px; /* Трохи збільшено для вмісту з зображеннями */
+    overflow-y: auto; 
+    box-sizing: border-box;
+}
+
+.search-results-dropdown.active {
+    display: block; 
+}
+
+.search-result-item {
+    display: flex; /* Змінено на flex для вирівнювання зображення та тексту */
+    align-items: center; /* Вертикальне вирівнювання */
+    padding: 8px 12px; /* Трохи скориговано padding */
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9em;
+    border-bottom: 1px solid #f0f0f0; 
+    transition: background-color 0.2s ease, color 0.2s ease;
+    /* white-space: nowrap; -- Закоментовано, щоб дозволити перенос назви, якщо потрібно */
+    /* overflow: hidden; -- Закоментовано */
+    /* text-overflow: ellipsis; -- Закоментовано */
+}
+.search-result-item img { /* Стилі для зображення в результатах пошуку */
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 4px;
+    flex-shrink: 0; /* Щоб зображення не стискалося */
+}
+.search-result-item span { /* Для тексту назви товару */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1; /* Щоб текст займав доступний простір */
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+.search-result-item:hover {
+    background-color: #f5f5f5;
+    color: #ff69b4;
+}
+/* --- КІНЕЦЬ СТИЛІВ ДЛЯ ПОШУКУ --- */
+
+
+.icon-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.5em;
+    margin-left: 15px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.icon-link:hover {
+    color: #ff69b4;
+}
+
+#cart-count-header {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #ff69b4;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.65em;
+    font-weight: bold;
+    line-height: 1;
+    border: 1px solid white;
+}
+
+.burger-menu {
+    display: none;
+    font-size: 1.8em;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* Responsive for header */
+@media (max-width: 992px) {
+    header nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background-color: #fff; border-top: 1px solid #eee; box-shadow: 0 4px 5px rgba(0,0,0,0.1); padding: 10px 0; z-index: 999; }
+    header nav.active { display: block; }
+    header nav ul { flex-direction: column; align-items: center; }
+    header nav ul li { margin: 10px 0; width: 100%; text-align: center; }
+    .burger-menu { display: block; }
+    
+    .header-actions .search-bar { width: 140px; }
+    .header-actions .search-bar:focus { width: 180px; }
+    .search-results-dropdown { min-width: 240px; /* Зменшуємо для мобільних, якщо потрібно */ }
+
+    header nav ul li.dropdown .dropdown-menu { position: static; box-shadow: none; border: none; border-top: 1px solid #f0f0f0; min-width: 100%; padding-left: 0; margin-top: 10px; background-color: #fdfdfd; opacity: 1; visibility: visible; transform: none; display: none; }
+    header nav ul li.dropdown.open .dropdown-menu { display: block; }
+    header nav ul li.dropdown .dropdown-menu li a { padding: 8px 20px; font-size: 0.95em; }
+}
+
+@media (max-width: 768px) {
+    .header-actions .search-bar { width: 40px; padding-left: 30px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23888' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 10px center; transition: width 0.3s ease, background-color 0.3s ease; }
+    .header-actions .search-bar::placeholder { color: transparent; }
+    .header-actions .search-bar:focus { width: 150px; padding-left: 12px; background-image: none; }
+    .header-actions .search-bar:focus::placeholder { color: #999; }
+    
+    .search-results-dropdown {
+        left: 0; /* Або інше значення для кращого розташування на мобільних */
+        right: auto; /* Дозволяємо ширині контролюватися min-width/width */
+        width: 280px; /* Або інша фіксована ширина, яка добре виглядає */
+        min-width: unset; /* Скидаємо min-width, якщо використовуємо фіксовану width */
+    }
+    .search-result-item { padding: 8px 10px; } /* Менші відступи для мобільних */
+    .search-result-item img { width: 30px; height: 30px; margin-right: 8px; }
+
+    .logo-text { font-size: 1.8em; }
+    .header-actions .icon-link { margin-left: 10px; font-size: 1.4em; }
+}

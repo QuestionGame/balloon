@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Деталі товару - HappyKulka</title> <!-- Заголовок буде динамічним -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header-style.css">
+    <link rel="stylesheet" href="/css/footer-style.css">
+    <link rel="stylesheet" href="/css/product-details-style.css"> <!-- Нові стилі -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="product-details-page">
+        <div class="container">
+            <nav aria-label="breadcrumb" class="breadcrumbs" id="product-breadcrumbs">
+                <ol>
+                    <li><a href="index.html">Головна</a></li>
+                    <li><a href="catalog.html">Каталог</a></li>
+                    <!-- Назва категорії та товару будуть додані JS -->
+                    <!-- <li aria-current="page">Назва товару</li> -->
+                </ol>
+            </nav>
+
+            <div id="product-details-content">
+                <!-- Сюди JS завантажить інформацію про товар -->
+                <p class="loading-indicator">Завантаження деталей товару...</p>
+            </div>
+
+            <!-- Секція "Рекомендовані товари" або "Схожі товари" (опціонально) -->
+            <section class="related-products products-section">
+                <h2>Також вас можуть зацікавити</h2>
+                <div class="product-grid" id="related-products-grid">
+                    <!-- Сюди JS може завантажити схожі товари -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <div id="toast-container"></div>
+    <button id="scrollToTopBtn" title="Наверх">↑</button>
+    
+    <script type="module" src="/js/main.js"></script> 
+</body>
+</html>

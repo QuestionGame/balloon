@@ -1,0 +1,157 @@
+/* /css/product-details-style.css */
+.product-details-page {
+    padding: 20px 0 40px;
+}
+
+.breadcrumbs {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 0.9em;
+}
+.breadcrumbs ol { list-style: none; padding: 0; margin: 0; display: flex; align-items: center; flex-wrap: wrap; }
+.breadcrumbs li { display: flex; align-items: center; }
+.breadcrumbs li a { color: #ff69b4; text-decoration: none; }
+.breadcrumbs li a:hover { text-decoration: underline; }
+.breadcrumbs li:not(:last-child)::after { content: '/'; margin: 0 8px; color: #888; }
+.breadcrumbs li[aria-current="page"] { color: #333; font-weight: 500; }
+
+#product-details-content {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.product-image-gallery {
+    flex: 1 1 45%; /* Займає приблизно 45% ширини */
+    max-width: 500px; /* Обмеження максимальної ширини */
+}
+.product-image-gallery img.main-product-image {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    margin-bottom: 10px; /* Якщо будуть мініатюри */
+}
+/* Стилі для мініатюр, якщо будете додавати */
+.product-thumbnails { display: flex; gap: 10px; flex-wrap: wrap; }
+.product-thumbnails img { width: 80px; height: 80px; object-fit: cover; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; opacity: 0.7; }
+.product-thumbnails img.active, .product-thumbnails img:hover { border-color: #ff69b4; opacity: 1; }
+
+
+.product-info-main {
+    flex: 1 1 55%; /* Займає решту простору */
+}
+.product-info-main h1.product-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+.product-meta {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 20px;
+}
+.product-meta span { margin-right: 15px; }
+.product-meta .availability-status.in-stock { color: #28a745; font-weight: bold; }
+.product-meta .availability-status.out-of-stock { color: #dc3545; font-weight: bold; }
+
+.product-price-details {
+    font-size: 2em;
+    color: #ff69b4;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+.product-price-details .old-price { /* Якщо буде стара ціна для знижки */
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.7em;
+    margin-left: 10px;
+}
+
+.product-quantity-selector {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.product-quantity-selector label { margin-right: 10px; font-weight: 500; }
+.product-quantity-selector input[type="number"] {
+    width: 60px;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    margin-right: 10px;
+}
+.product-quantity-selector .quantity-btn {
+    background: #eee;
+    border: 1px solid #ccc;
+    color: #333;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.product-quantity-selector .quantity-btn:hover { background: #ddd; }
+
+
+.product-actions .btn {
+    margin-right: 15px;
+    padding: 12px 25px;
+}
+.product-actions .btn:last-child { margin-right: 0; }
+.product-actions .btn-buy-one-click { /* Якщо буде кнопка "Купити в 1 клік" */
+    /* background-color: #f0ad4e; */
+    /* border-color: #eea236; */
+}
+
+.product-description-section {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+}
+.product-description-section h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #333;
+}
+.product-description-section p, 
+.product-description-section ul {
+    font-size: 1em;
+    line-height: 1.7;
+    color: #555;
+}
+.product-description-section ul {
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.related-products {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+}
+.related-products h2 {
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 30px;
+}
+.related-products .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Можна менші картки для рекомендованих */
+}
+
+
+@media (max-width: 768px) {
+    #product-details-content {
+        flex-direction: column;
+    }
+    .product-image-gallery, .product-info-main {
+        flex-basis: auto;
+        max-width: 100%;
+    }
+    .product-info-main h1.product-title { font-size: 1.8em; }
+    .product-price-details { font-size: 1.6em; }
+}

@@ -1,0 +1,149 @@
+/* footer-style.css */
+footer {
+    background-color: #333;
+    color: #ccc; /* Lighter grey for better readability on dark bg */
+    padding: 50px 0 20px;
+    font-size: 0.9em;
+    line-height: 1.7; /* Increased line height for readability */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 40px; /* More space before bottom bar */
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 220px; /* Slightly larger min-width */
+}
+
+.footer-column h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.15em; /* Adjusted size */
+    margin-bottom: 20px; /* More space under heading */
+    color: #fff;
+    position: relative;
+    font-weight: 700; /* Bold heading */
+}
+
+.footer-column h4::after { /* Decorative underline for headings */
+    content: '';
+    display: block;
+    width: 30px;
+    height: 2px;
+    background-color: #ff69b4;
+    margin-top: 8px;
+}
+
+.footer-column p,
+.footer-column ul {
+    margin-bottom: 10px;
+}
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+.footer-column li {
+    margin-bottom: 8px;
+}
+
+.footer-column a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease, padding-left 0.3s ease; /* Added padding-left transition */
+}
+
+.footer-column a:hover {
+    color: #ff69b4;
+    /* text-decoration: underline; */ /* Optional: keep or remove */
+    padding-left: 5px; /* Slight indent on hover */
+}
+
+.social-links a {
+    margin-right: 12px;
+    display: inline-block;
+}
+.social-links img {
+    width: 24px;
+    height: 24px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.social-links a:hover img {
+    opacity: 1;
+    transform: scale(1.1); /* Slight zoom on hover */
+}
+
+.subscribe-form {
+    display: flex;
+    margin-top: 15px; /* More space above form */
+}
+.subscribe-form input[type="email"] {
+    flex-grow: 1;
+    padding: 10px 12px;
+    border: 1px solid #555;
+    border-radius: 4px 0 0 4px;
+    background-color: #444;
+    color: #fff;
+    font-size: 0.95em;
+}
+.subscribe-form input[type="email"]::placeholder {
+    color: #999;
+}
+.subscribe-form input[type="email"]:focus {
+    border-color: #ff69b4;
+    outline: none;
+}
+
+.subscribe-form button.btn-secondary { /* Styles from global .btn may apply, this is for override/specificity */
+    padding: 10px 15px;
+    border-radius: 0 4px 4px 0;
+    background-color: #ff69b4;
+    color: white;
+    border: 1px solid #ff69b4;
+    font-weight: 500;
+    white-space: nowrap;
+}
+.subscribe-form button.btn-secondary:hover {
+    background-color: #e052b0;
+    border-color: #e052b0;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px; /* More space */
+    border-top: 1px solid #444;
+    font-size: 0.85em;
+    color: #aaa; /* Lighter color for copyright */
+}
+.footer-bottom p {
+    margin: 0;
+}
+
+/* Responsive for footer */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 25px;
+    }
+    .footer-column {
+        min-width: 100%;
+        text-align: center; /* Center text on mobile */
+    }
+    .footer-column h4::after {
+        margin-left: auto;
+        margin-right: auto; /* Center underline */
+    }
+    .social-links {
+        text-align: center;
+    }
+    .subscribe-form {
+        justify-content: center;
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

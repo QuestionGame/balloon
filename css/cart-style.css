@@ -1,0 +1,275 @@
+/* cart-style.css */
+/* Стилі для сторінки кошика */
+.cart-page {
+    padding: 40px 0;
+    /* min-height: 60vh; /* ВИДАЛЕНО: flex-grow на main тепер керує цим */
+}
+
+/* Хлібні крихти */
+.breadcrumbs {
+    margin-bottom: 25px; /* Більше простору під хлібними крихтами */
+    padding: 8px 0; /* Невеликий внутрішній відступ */
+    border-bottom: 1px solid #e0e0e0; /* Легка лінія розділення */
+    font-size: 0.9em;
+}
+
+.breadcrumbs ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Дозволяє переносити на новий рядок на малих екранах */
+}
+
+.breadcrumbs li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px; /* Для випадку переносу рядків */
+}
+
+.breadcrumbs li a {
+    color: #ff69b4; /* Колір акценту */
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.breadcrumbs li a:hover {
+    color: #e052b0; /* Темніший відтінок при наведенні */
+    text-decoration: underline;
+}
+
+.breadcrumbs li:not(:last-child)::after {
+    content: '/'; /* Змінено роздільник для стилю */
+    margin: 0 10px; /* Збільшено відступ */
+    color: #888;   /* Колір роздільника */
+}
+
+.breadcrumbs li[aria-current="page"] {
+    color: #333;
+    font-weight: 500; /* Або 700 для жирнішого */
+}
+
+.cart-page h1 {
+    text-align: center;
+    margin-top: 0; /* Якщо хлібні крихти є, можна зменшити верхній відступ заголовка */
+    margin-bottom: 30px;
+    font-family: 'Pacifico', cursive;
+    color: #ff69b4; /* Accent color */
+    font-size: 2.5em; /* Збільшено для кращого вигляду */
+}
+
+.cart-items table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Невелика тінь для таблиці */
+}
+
+.cart-items th, .cart-items td {
+    border: 1px solid #e0e0e0; /* Світліша рамка */
+    padding: 12px 15px; /* Трохи більше padding */
+    text-align: left;
+    vertical-align: middle;
+}
+
+.cart-items th {
+    background-color: #f9f9f9;
+    font-weight: 700; /* Жирніший шрифт для заголовків */
+    color: #555;
+}
+
+.cart-items img.product-image-small {
+    max-width: 70px; /* Трохи більше зображення */
+    height: auto;
+    margin-right: 15px;
+    border-radius: 4px; /* Заокруглені кути для зображень */
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+}
+
+.cart-items input[type="number"].quantity-input {
+    width: 60px;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.cart-items .remove-item-btn {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.cart-items .remove-item-btn:hover {
+    background-color: #e05252;
+}
+
+.cart-summary {
+    text-align: right;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.cart-summary p {
+    font-size: 1.3em; /* Збільшено розмір тексту суми */
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.cart-summary p span#cart-total-price {
+    color: #ff69b4; /* Accent color for total price */
+}
+
+.cart-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Для кращої адаптивності */
+    gap: 15px; /* Відстань між кнопками */
+}
+
+/* Стилі для кнопок (якщо вони не повністю покриті в style.css) */
+/* Глобальні стилі кнопок тепер у style.css, ці можна видалити або залишити для специфічних перевизначень */
+/*
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #ff69b4; 
+    color: white;
+    border: 1px solid #ff69b4;
+}
+
+.btn-primary:hover {
+    background-color: #e052b0; 
+    border-color: #e052b0;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: 1px solid #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+}
+*/
+
+.empty-cart-message {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px dashed #ddd;
+}
+
+.empty-cart-message p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* Адаптивність для сторінки кошика */
+@media (max-width: 768px) {
+    .cart-page h1 {
+        font-size: 2em;
+    }
+    .cart-items th, .cart-items td {
+        padding: 10px 8px;
+        font-size: 0.9em;
+    }
+    .cart-items img.product-image-small {
+        max-width: 50px;
+        margin-right: 10px;
+    }
+    .cart-items input[type="number"].quantity-input {
+        width: 50px;
+        padding: 6px;
+    }
+    .cart-actions {
+        flex-direction: column; /* Кнопки одна під одною */
+        align-items: stretch; /* Розтягнути кнопки по ширині */
+    }
+    .cart-actions .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .cart-actions .btn:last-child {
+        margin-bottom: 0;
+    }
+    .product-info {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .product-info img.product-image-small {
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-items th:nth-child(2), 
+    .cart-items td:nth-child(2) {
+        /* display: none; */ 
+    }
+     .cart-items td {
+        display: block; 
+        width: 100%;
+        text-align: right; 
+        padding-left: 50%; 
+        position: relative;
+    }
+    .cart-items td:before {
+        content: attr(data-label); 
+        position: absolute;
+        left: 10px;
+        width: calc(50% - 20px);
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: bold;
+        text-align: left;
+    }
+     .cart-items thead {
+        display: none; 
+    }
+    .cart-items tr {
+        margin-bottom: 10px;
+        display: block;
+        border: 1px solid #e0e0e0;
+    }
+     .product-info { 
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+    }
+    .cart-items td.product-info:before { 
+        content: "";
+    }
+    .cart-items td.product-info {
+        padding-left: 10px; 
+    }
+}

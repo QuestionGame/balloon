@@ -1,0 +1,34 @@
+<!-- header.html (оновлено) -->
+<header>
+    <div class="container">
+        <a href="index.html" class="logo-link">
+            <span class="logo-text">Happy<span class="logo-text-accent">Kulka</span></span>
+        </a>
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="catalog.html">Каталог <span class="arrow-down">▼</span></a>
+                    <ul class="dropdown-menu" id="catalog-dropdown-menu">
+                        <!-- Категорії для дропдауну будуть завантажені JS -->
+                    </ul>
+                </li>
+                <li><a href="index.html#promo">Акції</a></li>
+                <li><a href="index.html#about">Про нас</a></li>
+                <li><a href="index.html#contact">Контакти</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <!-- Обгортка для поля пошуку та випадаючого списку -->
+            <div class="search-container"> 
+                <input type="text" placeholder="Пошук товарів..." class="search-bar" id="header-search-bar">
+                <div class="search-results-dropdown" id="search-results-dropdown">
+                    <!-- Сюди JS буде динамічно додавати результати "живого" пошуку -->
+                </div>
+            </div>
+            <a href="#" class="icon-link" aria-label="Обране">♡</a>
+            <a href="cart.html" class="icon-link" aria-label="Кошик">🛒 <span id="cart-count-header">0</span></a>
+            <a href="login.html" class="icon-link" aria-label="Вхід">👤</a>
+        </div>
+        <button class="burger-menu" aria-label="Відкрити меню">☰</button>
+    </div>
+</header>

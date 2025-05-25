@@ -1,0 +1,31 @@
+# Файл конфігурації Firebase Admin SDK (містить секретні ключі)
+# ВАЖЛИВО: Цей файл НІКОЛИ не повинен потрапляти в репозиторій!
+server/serviceAccountKey.json
+
+# Локальні змінні середовища
+# Файл .env у корені (якщо є)
+.env
+# Файл .env у папці сервера
+server/.env
+
+# Папки з залежностями Node.js
+# Залежності для сервера в папці /server/node_modules
+server/node_modules/
+# Якщо б у вас були залежності для фронтенду в корені, було б /node_modules/
+
+# Файли логів npm, yarn, pnpm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Файли, що генеруються операційною системою
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Файли конфігурації IDE (опціонально, але рекомендується для командної роботи)
+.idea/
+.vscode/
+*.iml

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мій кошик - HappyKulka</title>
+    <link rel="stylesheet" href="/css/style.css">      <!-- Глобальні стилі -->
+    <link rel="stylesheet" href="/css/header-style.css"> <!-- Стилі хедера -->
+    <link rel="stylesheet" href="/css/footer-style.css"> <!-- Стилі футера -->
+    <link rel="stylesheet" href="/css/cart-style.css">   <!-- Стилі сторінки кошика -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder">
+        <p style="text-align:center;padding:20px 0;background-color:#f0f0f0;">Завантаження хедера...</p>
+    </div>
+
+    <main class="cart-page">
+        <div class="container">
+            <!-- Хлібні крихти -->
+            <nav aria-label="breadcrumb" class="breadcrumbs">
+                <ol>
+                    <li><a href="index.html">Головна</a></li>
+                    <li aria-current="page">Мій кошик</li>
+                </ol>
+            </nav>
+
+            <h1>Мій кошик</h1>
+            <div id="cart-content">
+                <!-- Structure for cart items, summary, and actions -->
+                <div class="cart-items" style="display: none;"> <!-- Hidden initially, JS shows if items exist -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Товар</th>
+                                <th data-label="Ціна">Ціна</th>
+                                <th data-label="Кількість">Кількість</th>
+                                <th data-label="Сума">Сума</th>
+                                <th></th> <!-- For remove button -->
+                            </tr>
+                        </thead>
+                        <tbody id="cart-table-body">
+                            <!-- JS will populate this -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cart-summary" style="display: none;"> <!-- Hidden initially -->
+                    <p>Загальна сума: <span id="cart-total-price">0 грн</span></p>
+                </div>
+                <div class="cart-actions" style="display: none;"> <!-- Hidden initially -->
+                    <a href="index.html#categories" class="btn btn-secondary">Продовжити покупки</a>
+                    <a href="#" class="btn btn-primary">Оформити замовлення</a> <!-- Можливо, посилання на checkout.html -->
+                </div>
+                <!-- Empty cart message will be inserted here by JS if needed -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder">
+         <p style="text-align:center;padding:20px 0;background-color:#f0f0f0;">Завантаження футера...</p>
+    </div>
+    
+   <script type="module" src="/js/main.js"></script>
+
+</body>
+</html>
