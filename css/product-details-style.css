@@ -123,6 +123,7 @@
     font-size: 1em;
     line-height: 1.7;
     color: #555;
+    text-align: justify;
 }
 .product-description-section ul {
     padding-left: 20px;

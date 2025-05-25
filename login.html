@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вхід - HappyKulka</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header-style.css">
+    <link rel="stylesheet" href="/css/footer-style.css">
+    <link rel="stylesheet" href="/css/auth-style.css"> <!-- Стилі для форм входу/реєстрації -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="auth-page">
+        <div class="container auth-container">
+            <h1>Вхід в акаунт</h1>
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="login-email">Email адреса</label>
+                    <input type="email" id="login-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Пароль</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <div class="form-error" id="login-error-message" style="display:none;"></div>
+                <button type="submit" class="btn btn-primary">Увійти</button>
+            </form>
+            <p class="auth-switch">Немає акаунту? <a href="register.html">Зареєструватися</a></p>
+            <!-- <p><a href="#">Забули пароль?</a></p> -->
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <div id="toast-container"></div>
+    <button id="scrollToTopBtn" title="Наверх">↑</button>
+    
+    <script type="module" src="/js/main.js"></script>
+</body>
+</html>

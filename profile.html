@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мій профіль - HappyKulka</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header-style.css">
+    <link rel="stylesheet" href="/css/footer-style.css">
+    <link rel="stylesheet" href="/css/auth-style.css"> <!-- Можна використовувати спільні стилі для сторінок акаунта -->
+    <link rel="stylesheet" href="/css/profile-style.css"> <!-- Специфічні стилі для профілю -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="profile-page">
+        <div class="container profile-container">
+            <div id="user-profile-content">
+                <!-- Сюди JS завантажить інформацію про користувача -->
+                <p class="loading-indicator">Завантаження профілю...</p>
+            </div>
+
+            <div id="profile-actions" style="display: none;">
+                <!-- Розділ для майбутніх дій, наприклад, зміна пароля -->
+                <!-- <h3>Налаштування профілю</h3>
+                <ul>
+                    <li><a href="#" id="change-password-link">Змінити пароль</a></li>
+                </ul> -->
+                <button id="logout-button-profile" class="btn btn-outline-secondary">Вийти з акаунту</button>
+            </div>
+
+             <div id="order-history-section" style="margin-top: 30px; display: none;">
+                <h3>Історія замовлень</h3>
+                <div id="order-history-list">
+                    <p>У вас ще немає замовлень.</p>
+                    <!-- Сюди можна буде завантажувати список замовлень -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <div id="toast-container"></div>
+    <button id="scrollToTopBtn" title="Наверх">↑</button>
+    
+    <script type="module" src="/js/main.js"></script>
+</body>
+</html>

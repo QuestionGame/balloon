@@ -1,0 +1,90 @@
+/* /css/auth-style.css */
+.auth-page {
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Вирівнювання по верху, якщо сторінка коротка */
+    min-height: 70vh; /* Щоб форма не прилипала до хедера/футера */
+}
+
+.auth-container {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 450px;
+}
+
+.auth-container h1 {
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    color: #ff69b4;
+    font-size: 2.2em;
+    margin-bottom: 25px;
+}
+
+.auth-form .form-group {
+    margin-bottom: 20px;
+}
+
+.auth-form label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus,
+.auth-form input[type="text"]:focus {
+    border-color: #ff69b4;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 105, 180, 0.2);
+}
+
+.auth-form .btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.05em;
+    margin-top: 10px; /* Додатковий відступ перед кнопкою */
+}
+
+.form-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.95em;
+    color: #555;
+}
+
+.auth-switch a {
+    color: #ff69b4;
+    font-weight: 600;
+    text-decoration: none;
+}
+.auth-switch a:hover {
+    text-decoration: underline;
+}
