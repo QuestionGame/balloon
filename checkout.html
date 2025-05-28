@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформлення замовлення - HappyKulka</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header-style.css">
+    <link rel="stylesheet" href="/css/footer-style.css">
+    <link rel="stylesheet" href="/css/cart-style.css"> <!-- Можна частково використати деякі стилі звідси -->
+    <link rel="stylesheet" href="/css/checkout-style.css"> <!-- Нові стилі для сторінки оформлення -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="checkout-page">
+        <div class="container">
+            <nav aria-label="breadcrumb" class="breadcrumbs">
+                <ol>
+                    <li><a href="index.html">Головна</a></li>
+                    <li><a href="cart.html">Мій кошик</a></li>
+                    <li aria-current="page">Оформлення замовлення</li>
+                </ol>
+            </nav>
+
+            <h1>Оформлення замовлення</h1>
+
+            <div class="checkout-layout">
+                <section class="checkout-form-section">
+                    <h2>Ваші контактні дані</h2>
+                    <form id="checkout-form">
+                        <div class="form-group">
+                            <label for="checkout-name">ПІБ (Повністю)</label>
+                            <input type="text" id="checkout-name" name="customerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-phone">Номер телефону</label>
+                            <input type="tel" id="checkout-phone" name="customerPhone" placeholder="+380 XX XXX XX XX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-email">Email адреса</label>
+                            <input type="email" id="checkout-email" name="customerEmail" required>
+                        </div>
+
+                        <h2>Адреса доставки</h2>
+                        <div class="form-group">
+                            <label for="checkout-city">Місто</label>
+                            <input type="text" id="checkout-city" name="shippingCity" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-address">Вулиця, будинок, квартира</label>
+                            <input type="text" id="checkout-address" name="shippingAddressLine1" required>
+                        </div>
+                         <div class="form-group">
+                            <label for="checkout-np-warehouse">Відділення Нової Пошти (або інструкції)</label>
+                            <input type="text" id="checkout-np-warehouse" name="shippingWarehouse" placeholder="Наприклад, Відділення №15 або Поштомат №1234">
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-comment">Коментар до замовлення (необов'язково)</label>
+                            <textarea id="checkout-comment" name="orderComment" rows="3"></textarea>
+                        </div>
+                        
+                        <h2>Спосіб оплати</h2>
+                        <div class="form-group">
+                             <select id="payment-method" name="paymentMethod">
+                                <option value="cash_on_delivery" selected>Оплата при отриманні</option>
+                                <option value="card_online" disabled>Оплата карткою онлайн (недоступно)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-error" id="checkout-error-message" style="display:none;"></div>
+                        <button type="submit" id="confirm-order-btn" class="btn btn-primary btn-large">Підтвердити замовлення</button>
+                    </form>
+                </section>
+
+                <aside class="checkout-summary-section">
+                    <h2>Ваше замовлення</h2>
+                    <div id="checkout-items-summary">
+                        <!-- Сюди JS завантажить товари з кошика -->
+                        <p class="loading-indicator">Завантаження кошика...</p>
+                    </div>
+                    <div class="checkout-total">
+                        <p>Разом: <strong id="checkout-grand-total">0.00 грн</strong></p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <div id="toast-container"></div>
+    <button id="scrollToTopBtn" title="Наверх">↑</button>
+    
+    <script type="module" src="/js/main.js"></script>
+</body>
+</html>

@@ -4,7 +4,7 @@ const express = require('express');
 const path = require('path');
 const admin = require('firebase-admin');
 const cors = require('cors');
-const morgan = require('morgan');
+const morgan = require('morgan'); // Змінено: підключаємо сам пакет
 
 try {
   const serviceAccount = require('./serviceAccountKey.json');
@@ -19,14 +19,19 @@ const db = admin.firestore();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-const projectRoot = path.join(__dirname, '../');
-app.use(express.static(projectRoot));
+// --- Middleware (Проміжне ПЗ) ---
+app.use(cors()); // Дозволяє крос-доменні запити (наприклад, з localhost:xxxx на localhost:3000)
+app.use(morgan('dev')); // Логування HTTP-запитів в консоль у форматі 'dev' (короткий, для розробки)
+app.use(express.json()); // Парсер для тіла запитів у форматі JSON (для POST, PUT запитів)
+app.use(express.urlencoded({ extended: true })); // Парсер для тіла запитів у форматі x-www-form-urlencoded
+
+// Визначення кореневої папки проєкту
+const projectRoot = path.join(__dirname, '../'); 
+// Обслуговування статичних файлів (CSS, JS клієнта, зображення) з кореневої папки
+app.use(express.static(projectRoot)); 
 console.log(`Статичні файли обслуговуються з: ${projectRoot}`);
 
+// --- Допоміжні функції для відповідей ---
 const sendSuccess = (res, data, message = "Успіх") => {
   res.status(200).json({ success: true, message, data });
 };
@@ -39,13 +44,16 @@ const sendError = (res, statusCode, message, errorDetails = null, reqForLog = nu
   logMessageParts.push(`API Помилка [${statusCode}]: ${message}`);
   const fullLogMessage = logMessageParts.join(' ');
   console.error(fullLogMessage, errorDetails instanceof Error ? errorDetails.stack : errorDetails || '');
-  res.status(statusCode).json({ 
-    success: false, 
-    message, 
+  res.status(statusCode).json({
+    success: false,
+    message,
     error: errorDetails instanceof Error ? errorDetails.message : (typeof errorDetails === 'string' ? errorDetails : 'Невідома помилка')
   });
 };
 
+// --- API Маршрути ---
+
+// GET /api/categories - Отримати список категорій
 app.get('/api/categories', async (req, res) => {
   try {
     let query = db.collection('categories').orderBy('name');
@@ -54,40 +62,24 @@ app.get('/api/categories', async (req, res) => {
       query = query.limit(limit);
     }
     const categoriesSnapshot = await query.get();
-    const categories = categoriesSnapshot.docs.map(doc => {
-      const data = doc.data();
-      return { 
-        id: doc.id,
-        name: data.name,
-        image: data.image,
-        slug: doc.id // Використовуємо ID документа як slug
-      };
-    });
+    const categories = categoriesSnapshot.docs.map(doc => ({
+      id: doc.id, // ID документа в Firestore
+      ...doc.data(), // Всі інші поля з документа
+      slug: doc.id // Використовуємо ID документа як slug для простоти
+    }));
     sendSuccess(res, categories, "Категорії успішно отримано");
   } catch (error) {
     sendError(res, 500, "Не вдалося отримати категорії", error, req);
   }
 });
 
+// GET /api/products - Отримати список товарів (з фільтрацією та сортуванням)
 app.get('/api/products', async (req, res) => {
   try {
     let query = db.collection('products');
-    const { 
-        category, 
-        new: isNew, 
-        hit: isHit, 
-        sortBy = 'name', 
-        order = 'asc', 
-        minPrice, 
-        maxPrice, 
-        limit: queryLimit,
-        search 
-    } = req.query;
-
-    let priceFilterApplied = false;
+    const { category, new: isNew, hit: isHit, sortBy = 'name', order = 'asc', minPrice, maxPrice, limit: queryLimit, search } = req.query;
     let searchApplied = false;
 
-    // ПОШУК за nameTokens
     if (search && typeof search === 'string' && search.trim() !== '') {
         const searchTokens = search.trim().toLowerCase().split(/\s+/).filter(token => token.length > 0).slice(0, 10);
         if (searchTokens.length > 0) {
@@ -96,27 +88,19 @@ app.get('/api/products', async (req, res) => {
         }
     }
 
-    // Фільтрація за категоріями
     if (category) {
       let categorySlugs = [];
       if (Array.isArray(category)) {
         categorySlugs = category.filter(slug => slug && typeof slug === 'string' && slug.trim() !== '' && slug.trim().toLowerCase() !== 'undefined');
       } else if (typeof category === 'string') {
-        categorySlugs = category.split(',')
-                                .map(slug => slug.trim())
-                                .filter(slug => slug && slug !== '' && slug.toLowerCase() !== 'undefined');
+        categorySlugs = category.split(',').map(slug => slug.trim()).filter(slug => slug && slug !== '' && slug.toLowerCase() !== 'undefined');
       }
       if (categorySlugs.length > 0) {
-        if (searchApplied && categorySlugs.length > 0) {
-            console.warn("Firestore не може поєднувати 'array-contains-any' (для пошуку) з 'in' (для категорій) в одному простому запиті без спеціальних рішень. Фільтрація за категоріями може бути неточною або викликати помилку індексу.");
-            // Розгляньте можливість застосувати фільтр категорій на клієнті, якщо пошук активний, або використовувати складніші запити/декілька запитів.
-            // Для простоти, якщо є пошук, ми можемо не застосовувати фільтр категорій до запиту Firestore, щоб уникнути помилок індексів.
-            // Або, якщо дуже потрібно, можна спробувати, але бути готовим до помилок індексів:
-            // query = query.where('categorySlug', 'in', categorySlugs.slice(0, Math.min(categorySlugs.length, 10)));
+        if (searchApplied) {
+            console.warn("Firestore не може ефективно поєднувати 'array-contains-any' з 'in'. Фільтрація за категоріями може бути неточною при пошуку.");
         } else if (categorySlugs.length <= 10) {
              query = query.where('categorySlug', 'in', categorySlugs);
         } else {
-           console.warn("Запит містить більше 10 категорій. Фільтруються перші 10.");
            query = query.where('categorySlug', 'in', categorySlugs.slice(0,10));
         }
       }
@@ -125,53 +109,33 @@ app.get('/api/products', async (req, res) => {
     if (isNew === 'true') query = query.where('new', '==', true);
     if (isHit === 'true') query = query.where('hit', '==', true);
 
-    // Фільтрація за ціною - НЕ застосовуємо, якщо активний пошук, щоб уникнути складних проблем з індексами Firestore
     if (!searchApplied) {
         const minPriceNum = parseFloat(minPrice);
         const maxPriceNum = parseFloat(maxPrice);
-
-        if (!isNaN(minPriceNum)) {
-            query = query.where('price', '>=', minPriceNum);
-            priceFilterApplied = true;
-        }
-        if (!isNaN(maxPriceNum)) {
-            query = query.where('price', '<=', maxPriceNum);
-            priceFilterApplied = true;
-        }
+        if (!isNaN(minPriceNum)) query = query.where('price', '>=', minPriceNum);
+        if (!isNaN(maxPriceNum)) query = query.where('price', '<=', maxPriceNum);
     } else if (minPrice || maxPrice) {
-        console.warn("Фільтрація за ціною не застосовується разом з текстовим пошуком через обмеження запитів Firestore.");
+        console.warn("Фільтрація за ціною не застосовується разом з текстовим пошуком.");
     }
-    
-    // Сортування
-    if (sortBy === 'price' && !searchApplied) { // Сортування за ціною тільки якщо немає пошуку (і є фільтр ціни або просто сортування за ціною)
+
+    if (sortBy === 'price' && !searchApplied) {
         query = query.orderBy('price', order === 'desc' ? 'desc' : 'asc');
     } else {
-        // Якщо є пошук, Firestore може сортувати тільки за тим же полем, що використовується в array-contains-any,
-        // або вимагатиме дуже специфічних індексів для сортування за іншим полем.
-        // Для nameTokens пошуку, сортування за 'name' є природним.
         query = query.orderBy('name', order === 'desc' ? 'desc' : 'asc');
     }
-    // ВАЖЛИВО: Створення композитних індексів у Firestore є ОБОВ'ЯЗКОВИМ.
-    // Слідкуйте за консоллю сервера на повідомлення від Firebase з посиланнями для створення індексів.
-    // Приклади необхідних індексів:
-    // (nameTokens ARRAY, name ASC/DESC) - для пошуку та сортування за назвою
-    // (categorySlug IN, name ASC/DESC) - для фільтра за категорією та сортування за назвою
-    // (hit == true, name ASC/DESC) - для фільтра хітів та сортування за назвою
-    // (price >= X, name ASC/DESC) - для фільтра ціни та сортування за назвою (і аналогічно для <=)
-    // (price >= X, price ASC/DESC) - для фільтра ціни та сортування за ціною
 
     const limit = parseInt(queryLimit);
     if (!isNaN(limit) && limit > 0) query = query.limit(limit);
 
     const productsSnapshot = await query.get();
     const products = productsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    
     sendSuccess(res, products, "Товари успішно отримано");
   } catch (error) {
-    sendError(res, error.code === 9 ? 400 : 500, "Не вдалося отримати товари", error, req);
+    sendError(res, error.code === 9 || error.code === 5 ? 400 : 500, "Не вдалося отримати товари", error, req);
   }
 });
 
+// GET /api/products/:productId - Отримати деталі одного товару
 app.get('/api/products/:productId', async (req, res) => {
   try {
     const productId = req.params.productId;
@@ -188,15 +152,135 @@ app.get('/api/products/:productId', async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => res.sendFile(path.join(projectRoot, 'index.html')));
-app.get('/cart', (req, res) => res.sendFile(path.join(projectRoot, 'cart.html')));
-app.get('/catalog', (req, res) => res.sendFile(path.join(projectRoot, 'catalog.html')));
-app.get('/product-details.html', (req, res) => res.sendFile(path.join(projectRoot, 'product-details.html'))); // Явний маршрут для сторінки товару
+// GET /api/orders - Отримати історію замовлень користувача
+app.get('/api/orders', async (req, res) => {
+    try {
+        const userId = req.query.userId; // УВАГА: Для продакшену userId має бути отриманий та верифікований з токена автентифікації Firebase
+        if (!userId) {
+            return sendError(res, 401, "Користувача не автентифіковано або ID не надано.");
+        }
+        // Тут має бути перевірка, чи запитувач має право бачити ці замовлення (userId з токена == userId з запиту)
+        const ordersSnapshot = await db.collection('orders')
+                                       .where('userId', '==', userId)
+                                       .orderBy('date', 'desc')
+                                       .get();
+        if (ordersSnapshot.empty) {
+            return sendSuccess(res, [], "Історія замовлень порожня.");
+        }
+        const orders = ordersSnapshot.docs.map(doc => {
+            const data = doc.data();
+            if (data.date && typeof data.date.toDate === 'function') {
+                data.date = data.date.toDate(); // Конвертація Firebase Timestamp в JS Date
+            }
+            return { id: doc.id, ...data };
+        });
+        sendSuccess(res, orders, "Історія замовлень успішно отримана.");
+    } catch (error) {
+        sendError(res, 500, "Не вдалося отримати історію замовлень", error, req);
+    }
+});
 
+// POST /api/orders - Створити нове замовлення
+app.post('/api/orders', async (req, res) => {
+    try {
+        const orderData = req.body;
+        if (!orderData || typeof orderData !== 'object') {
+            return sendError(res, 400, "Некоректні дані замовлення.");
+        }
+        const { customerDetails, shippingDetails, items, totalAmount, paymentMethod, userId } = orderData;
+
+        if (!customerDetails || !customerDetails.name || !customerDetails.phone || !customerDetails.email ||
+            !shippingDetails || !shippingDetails.city || !shippingDetails.addressLine1 ||
+            !Array.isArray(items) || items.length === 0 ||
+            typeof totalAmount !== 'number' || totalAmount <= 0 ||
+            !paymentMethod) {
+            return sendError(res, 400, "Відсутні обов'язкові поля в даних замовлення.");
+        }
+
+        const generatedOrderNumber = `HPK-${Date.now().toString().slice(-7)}-${String(Math.floor(1000 + Math.random() * 9000)).padStart(4, '0')}`;
+
+        const newOrderData = {
+            orderNumber: generatedOrderNumber, customerDetails, shippingDetails, items,
+            paymentMethod, orderComment: orderData.orderComment || '',
+            status: 'pending', date: admin.firestore.FieldValue.serverTimestamp(),
+        };
+        if (userId) newOrderData.userId = userId;
+
+        let serverCalculatedTotal = 0;
+        const productPromises = items.map(item => db.collection('products').doc(item.id).get());
+        const productDocs = await Promise.all(productPromises);
+
+        for (let i = 0; i < productDocs.length; i++) {
+            const productDoc = productDocs[i];
+            if (!productDoc.exists) return sendError(res, 400, `Товар з ID ${items[i].id} не знайдено.`);
+            const productData = productDoc.data();
+            if (parseFloat(productData.price) !== parseFloat(items[i].price)) {
+                console.warn(`Невідповідність ціни для товару ${items[i].id}. Клієнт: ${items[i].price}, Сервер: ${productData.price}.`);
+            }
+            serverCalculatedTotal += parseFloat(productData.price) * parseInt(items[i].quantity);
+        }
+        if (Math.abs(serverCalculatedTotal - totalAmount) > 0.01) {
+            console.warn(`Невідповідність загальної суми. Клієнт: ${totalAmount}, Сервер: ${serverCalculatedTotal.toFixed(2)}.`);
+        }
+        newOrderData.totalAmount = parseFloat(serverCalculatedTotal.toFixed(2));
+
+        await db.collection('orders').doc(generatedOrderNumber).set(newOrderData);
+        sendSuccess(res, { id: generatedOrderNumber, orderNumber: newOrderData.orderNumber, totalAmount: newOrderData.totalAmount }, "Замовлення успішно створено.");
+    } catch (error) {
+        sendError(res, 500, "Не вдалося створити замовлення", error, req);
+    }
+});
+
+// GET /api/orders/:orderId - Отримати деталі одного замовлення
+app.get('/api/orders/:orderId', async (req, res) => {
+    try {
+        const orderId = req.params.orderId;
+        // ВАЖЛИВО: Тут має бути перевірка автентифікації та авторизації (чи має користувач право бачити це замовлення)
+        // const idToken = req.headers.authorization?.split('Bearer ')[1];
+        // if (!idToken) return sendError(res, 401, "Необхідна автентифікація.");
+        // const decodedToken = await admin.auth().verifyIdToken(idToken);
+        // const currentUserId = decodedToken.uid;
+
+        if (!orderId || typeof orderId !== 'string' || orderId.trim() === '') {
+            return sendError(res, 400, "ID замовлення не вказано або не є валідним.", null, req);
+        }
+        const orderDoc = await db.collection('orders').doc(orderId).get();
+        if (!orderDoc.exists) {
+            return sendError(res, 404, "Замовлення не знайдено.", null, req);
+        }
+        const orderData = orderDoc.data();
+        // if (orderData.userId !== currentUserId /* && !userIsAdmin(currentUserId) */) { // Перевірка прав доступу
+        //     return sendError(res, 403, "Доступ до цього замовлення заборонено.");
+        // }
+        if (orderData.date && typeof orderData.date.toDate === 'function') {
+            orderData.date = orderData.date.toDate();
+        }
+        sendSuccess(res, { id: orderDoc.id, ...orderData }, "Деталі замовлення успішно отримано");
+    } catch (error) {
+        sendError(res, error.code === 'auth/id-token-expired' || error.code === 'auth/argument-error' ? 401 : 500, `Не вдалося отримати деталі замовлення ${req.params.orderId}`, error, req);
+    }
+});
+
+
+// --- Обслуговування HTML сторінок ---
+app.get('/', (req, res) => res.sendFile(path.join(projectRoot, 'index.html')));
+app.get('/cart.html', (req, res) => res.sendFile(path.join(projectRoot, 'cart.html')));
+app.get('/catalog.html', (req, res) => res.sendFile(path.join(projectRoot, 'catalog.html')));
+app.get('/product-details.html', (req, res) => res.sendFile(path.join(projectRoot, 'product-details.html')));
+app.get('/login.html', (req, res) => res.sendFile(path.join(projectRoot, 'login.html')));
+app.get('/register.html', (req, res) => res.sendFile(path.join(projectRoot, 'register.html')));
+app.get('/profile.html', (req, res) => res.sendFile(path.join(projectRoot, 'profile.html')));
+app.get('/checkout.html', (req, res) => res.sendFile(path.join(projectRoot, 'checkout.html')));
+app.get('/order-details.html', (req, res) => res.sendFile(path.join(projectRoot, 'order-details.html')));
+
+
+// --- Обробка помилок ---
+// Обробка неіснуючих API маршрутів
 app.use(/^\/api\/.*/,(req, res) => {
     sendError(res, 404, "Запитаний API ресурс не знайдено.", null, req);
 });
 
+// Обробка 404 для HTML сторінок
 app.use((req, res, next) => {
   if (req.accepts('html')) {
     const _404_filePath = path.join(projectRoot, '404.html');
@@ -209,26 +293,27 @@ app.use((req, res, next) => {
   next();
 });
 
+// Глобальний обробник помилок сервера
 app.use((err, req, res, next) => {
   console.error("Непередбачена помилка сервера:", err.stack || err);
   const isProduction = process.env.NODE_ENV === 'production';
-  const statusCode = err.status || (err.code === 9 ? 400 : 500); 
-  
+  const statusCode = err.status || (err.code === 9 || err.code === 5 ? 400 : 500);
+
   let clientErrorMessage = 'На сервері сталася внутрішня помилка. Будь ласка, спробуйте пізніше.';
   if (!isProduction) {
     clientErrorMessage = err.message || 'Невідома серверна помилка';
-  } else if (statusCode === 400 && err.message && err.message.includes("requires an index")) {
-    clientErrorMessage = "Помилка запиту до бази даних. Будь ласка, повідомте адміністратора, якщо проблема повторюється.";
+  } else if (statusCode === 400 && err.message && (err.message.includes("requires an index") || err.message.includes("The query requires an index"))) {
+    clientErrorMessage = "Помилка запиту до бази даних. Будь ласка, повідомте адміністратора.";
+    console.error("Firestore Index Required: Please check server logs for a link to create the missing index.");
   }
 
   res.status(statusCode).json({
-      success: false,
-      message: "Помилка сервера",
-      error: clientErrorMessage,
-      details: !isProduction && err.stack ? err.stack.split('\n') : undefined 
+      success: false, message: "Помилка сервера", error: clientErrorMessage,
+      details: !isProduction && err.stack ? err.stack.split('\n') : undefined
   });
 });
 
+// --- Запуск сервера ---
 app.listen(PORT, () => {
   console.log(`Сервер успішно запущено на http://localhost:${PORT}`);
   if (process.env.NODE_ENV !== 'production') {

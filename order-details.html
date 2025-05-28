@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Деталі замовлення - HappyKulka</title> <!-- Заголовок може оновлюватися JS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header-style.css">
+    <link rel="stylesheet" href="/css/footer-style.css">
+    <link rel="stylesheet" href="/css/order-details-style.css"> <!-- Нові стилі -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="order-details-page">
+        <div class="container">
+            <nav aria-label="breadcrumb" class="breadcrumbs" id="order-details-breadcrumbs">
+                <ol>
+                    <li><a href="index.html">Головна</a></li>
+                    <li><a href="profile.html#order-history-section">Мій профіль</a></li>
+                    <!-- Назва категорії та товару будуть додані JS -->
+                    <li aria-current="page">Деталі замовлення</li> 
+                </ol>
+            </nav>
+
+            <h1 id="order-details-title">Деталі замовлення</h1>
+
+            <div id="order-details-content" class="order-details-container">
+                <!-- Сюди JS завантажить інформацію про замовлення -->
+                <p class="loading-indicator">Завантаження деталей замовлення...</p>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <div id="toast-container"></div>
+    <button id="scrollToTopBtn" title="Наверх">↑</button>
+    
+    <script type="module" src="/js/main.js"></script> 
+</body>
+</html>

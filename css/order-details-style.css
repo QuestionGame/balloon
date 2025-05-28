@@ -1,0 +1,145 @@
+/* /css/order-details-style.css */
+.order-details-page {
+    padding: 30px 0;
+}
+
+.order-details-page h1 {
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    color: #ff69b4;
+    font-size: 2.2em;
+    margin-bottom: 25px;
+}
+
+.order-details-container {
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.09);
+}
+
+.order-summary-header,
+.order-customer-info,
+.order-shipping-info,
+.order-items-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+.order-summary-header:last-child,
+.order-customer-info:last-child,
+.order-shipping-info:last-child,
+.order-items-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+
+.order-summary-header h2,
+.order-customer-info h3,
+.order-shipping-info h3,
+.order-items-section h3 {
+    font-size: 1.4em;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.order-summary-header p,
+.order-customer-info p,
+.order-shipping-info p {
+    margin: 5px 0 10px;
+    font-size: 1em;
+    color: #555;
+    line-height: 1.6;
+}
+.order-summary-header p strong,
+.order-customer-info p strong,
+.order-shipping-info p strong {
+    font-weight: 600;
+    color: #333;
+    min-width: 120px; /* для вирівнювання */
+    display: inline-block;
+}
+
+.order-status-detail {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+    font-size: 0.9em;
+}
+/* Класи для статусів - такі ж, як в profilePage */
+.order-status-detail.order-status-pending { background-color: #ffc107; color: #333;}
+.order-status-detail.order-status-completed { background-color: #28a745; }
+.order-status-detail.order-status-shipped { background-color: #17a2b8; }
+.order-status-detail.order-status-cancelled { background-color: #dc3545; }
+.order-status-detail.order-status-processing { background-color: #007bff; } /* Приклад для "в обробці" */
+
+
+.order-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+.order-items-table th,
+.order-items-table td {
+    border: 1px solid #e0e0e0;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+.order-items-table th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+}
+.order-items-table img.product-image-tiny {
+    max-width: 50px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+.order-items-table .item-name {
+    font-weight: 500;
+}
+.order-items-table .item-quantity,
+.order-items-table .item-price,
+.order-items-table .item-subtotal {
+    text-align: right;
+}
+
+.order-total-summary {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px solid #ff69b4;
+    text-align: right;
+}
+.order-total-summary p {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 0;
+}
+.order-total-summary strong {
+    color: #333; /* Можна #ff69b4 для акценту */
+}
+
+.loading-indicator {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #777;
+}
+
+@media (max-width: 768px) {
+    .order-details-page h1 {
+        font-size: 1.8em;
+    }
+    .order-details-container {
+        padding: 20px;
+    }
+    .order-items-table .item-price,
+    .order-items-table .item-subtotal {
+        /* Можна приховати деякі колонки на мобільних або зробити таблицю адаптивною як в кошику */
+    }
+}

@@ -1,7 +1,10 @@
-/* /css/profile-style.css */
-.profile-page {
-    padding: 40px 0;
-    min-height: 70vh;
+/* /css/profile-style.css - (доповнення) */
+.profile-page h1 { /* Якщо ще не визначено */
+    font-family: 'Pacifico', cursive;
+    color: #ff69b4;
+    font-size: 2.2em;
+    margin-bottom: 30px;
+    text-align: center; 
 }
 
 .profile-container {
@@ -10,91 +13,179 @@
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     width: 100%;
-    max-width: 700px; /* Можна зробити ширшим, ніж форми входу */
+    max-width: 800px; /* Збільшено для більшого вмісту */
+    margin: 0 auto; /* Центрування контейнера, якщо auth-page цього не робить */
 }
 
-#user-profile-content h1 {
-    font-family: 'Pacifico', cursive;
-    color: #ff69b4;
-    font-size: 2.2em;
-    margin-bottom: 10px;
-    text-align: left; /* Або center, якщо хочете */
+.profile-section {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #eee;
 }
-#user-profile-content h1::after { /* Прибираємо глобальне підкреслення для h2, якщо воно є */
-    display: none;
+.profile-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
 }
 
+.profile-section h2 {
+    font-size: 1.6em;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ff69b4;
+    display: inline-block; /* Щоб бордер був лише під текстом */
+}
 
 #user-profile-content p {
-    font-size: 1.1em;
+    font-size: 1em; /* Стандартизуємо розмір */
     color: #555;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     line-height: 1.6;
 }
-
-#user-profile-content .profile-detail {
-    margin-bottom: 10px;
-}
-
-#user-profile-content .profile-detail strong {
+#user-profile-content p strong {
     font-weight: 600;
     color: #333;
+    min-width: 150px; /* Для вирівнювання, якщо потрібно */
+    display: inline-block;
 }
 
-#profile-actions {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+.profile-meta { /* Для статусу email */
+    font-size: 0.95em;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-top: 5px;
+    display: inline-block;
 }
-
-#profile-actions h3 {
-    font-size: 1.3em;
-    margin-bottom: 15px;
-    color: #444;
+.profile-meta.success-text {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
 }
-#profile-actions ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 20px 0;
+.profile-meta.warning-text {
+    color: #856404;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
 }
-#profile-actions ul li {
-    margin-bottom: 10px;
+.profile-meta i {
+    margin-right: 8px;
 }
-#profile-actions ul li a {
-    color: #ff69b4;
-    text-decoration: none;
-    font-weight: 500;
-}
-#profile-actions ul li a:hover {
+#resend-verification-email-link {
+    color: #007bff;
     text-decoration: underline;
+    cursor: pointer;
 }
 
-#logout-button-profile {
-    display: inline-block; /* Щоб не розтягувалася на всю ширину, якщо це не потрібно */
-    /* width: auto; */ /* Або width: 100%; якщо потрібно */
+/* Форми в профілі */
+#edit-profile-form .form-group,
+#change-password-form .form-group {
+    margin-bottom: 15px;
+}
+#edit-profile-form label,
+#change-password-form label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #555;
+}
+#edit-profile-form input[type="text"],
+#change-password-form input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+#edit-profile-form input[type="text"]:focus,
+#change-password-form input[type="password"]:focus {
+    border-color: #ff69b4;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 105, 180, 0.2);
 }
 
-/* Стилі для індикатора завантаження, якщо вони не глобальні */
+#edit-profile-form .btn,
+#change-password-form .btn {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+#edit-profile-form .btn:last-child,
+#change-password-form .btn:last-child {
+    margin-right: 0;
+}
+
+
+/* Історія замовлень */
+.order-history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+.order-history-table th,
+.order-history-table td {
+    border: 1px solid #ddd;
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 0.95em;
+    vertical-align: middle;
+}
+.order-history-table th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+}
+.order-status {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #fff;
+}
+.order-status-pending { background-color: #ffc107; color: #333;}
+.order-status-completed { background-color: #28a745; }
+.order-status-shipped { background-color: #17a2b8; }
+.order-status-cancelled { background-color: #dc3545; }
+
 .loading-indicator {
     text-align: center;
     padding: 20px;
     font-style: italic;
     color: #777;
 }
+.form-error { /* Якщо ще не повністю визначено в auth-style.css */
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin: 10px 0;
+    font-size: 0.9em;
+}
 
-/* Стилі для історії замовлень (базові) */
-#order-history-list .order-item {
-    border: 1px solid #eee;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-}
-#order-history-list .order-item h4 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.1em;
-}
-#order-history-list .order-item p {
-    font-size: 0.95em;
-    margin-bottom: 5px;
+@media (max-width: 768px) {
+    .profile-container {
+        padding: 20px;
+    }
+    .profile-section h2 {
+        font-size: 1.4em;
+    }
+    .order-history-table th,
+    .order-history-table td {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+    /* Адаптація таблиці історії замовлень для мобільних */
+    .order-history-table thead { display: none; }
+    .order-history-table tr { display: block; margin-bottom: 15px; border: 1px solid #ddd; }
+    .order-history-table td { display: block; text-align: right; padding-left: 50%; position: relative; }
+    .order-history-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: calc(50% - 20px);
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+    }
 }
