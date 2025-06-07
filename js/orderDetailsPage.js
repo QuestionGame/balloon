@@ -25,14 +25,14 @@ export async function initializeOrderDetailsPage() {
 
     // Перевірка, чи користувач авторизований (базова)
     // В ідеалі, сервер має перевіряти, чи поточний користувач має право бачити це замовлення
-    const currentUser = auth.currentUser;
-    if (!currentUser) {
-         orderDetailsContent.innerHTML = '<p style="color:orange; text-align:center;">Будь ласка, увійдіть, щоб переглянути деталі замовлення.</p>';
-         setTimeout(() => {
-            window.location.href = `/login.html?redirectUrl=${encodeURIComponent(window.location.pathname + window.location.search)}`;
-        }, 2500);
-        return;
-    }
+    // const currentUser = auth.currentUser;
+    // if (!currentUser) {
+    //      orderDetailsContent.innerHTML = '<p style="color:orange; text-align:center;">Будь ласка, увійдіть, щоб переглянути деталі замовлення.</p>';
+    //      setTimeout(() => {
+    //         window.location.href = `/login.html?redirectUrl=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+    //     }, 2500);
+    //     return;
+    // }
 
     orderDetailsContent.innerHTML = '<p class="loading-indicator">Завантаження деталей замовлення...</p>';
     
