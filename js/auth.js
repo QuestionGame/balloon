@@ -207,18 +207,18 @@ onAuthStateChanged(auth, (user) => {
     console.log("auth.js: Динамічний onAuthStateChanged спрацював. Користувач:", user ? user.uid : 'немає');
     updateAuthUI(user); 
     
-    const protectedPages = ['profile.html', 'checkout.html'];
+    const protectedPages = ['profile.html'];
     const currentPage = window.location.pathname.split('/').pop();
 
-    // // Якщо користувач НЕ залогінений (user is null) І він на захищеній сторінці
-    // if (!user && protectedPages.includes(currentPage)) {
-    //     console.log(`auth.js (динамічний): Користувач не авторизований для ${currentPage}. Перенаправлення на вхід.`);
-    //     const redirectUrl = encodeURIComponent(window.location.pathname + window.location.search);
-    //     // Переконуємося, що ми не на login.html, щоб уникнути циклу
-    //     if (currentPage !== 'login.html' && currentPage !== 'register.html') {
-    //         window.location.href = `login.html?redirectUrl=${redirectUrl}`;
-    //     }
-    // }
+    // Якщо користувач НЕ залогінений (user is null) І він на захищеній сторінці
+    if (!user && protectedPages.includes(currentPage)) {
+        console.log(`auth.js (динамічний): Користувач не авторизований для ${currentPage}. Перенаправлення на вхід.`);
+        const redirectUrl = encodeURIComponent(window.location.pathname + window.location.search);
+        // Переконуємося, що ми не на login.html, щоб уникнути циклу
+        if (currentPage !== 'login.html' && currentPage !== 'register.html') {
+            window.location.href = `login.html?redirectUrl=${redirectUrl}`;
+        }
+    }
 });
 
 // Функція ініціалізації для сторінок входу та реєстрації
