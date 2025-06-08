@@ -4,7 +4,7 @@ const express = require('express');
 const path = require('path');
 const admin = require('firebase-admin');
 const cors = require('cors');
-const morgan = require('morgan'); // Змінено: підключаємо сам пакет
+const morgan = require('morgan'); 
 
 try {
   const serviceAccount = require('./serviceAccountKey.json');
