@@ -18,15 +18,26 @@ header .container {
 .logo-link {
     text-decoration: none;
 }
-
 .logo-text {
     font-family: 'Pacifico', cursive;
     font-size: 2em;
     color: #333;
+    transition: filter 0.3s ease;
 }
 
 .logo-text-accent {
     color: #ff69b4;
+    transition: filter 0.3s ease;
+}
+.logo-link:hover .logo-text {
+    color: #ff69b4;
+    filter: brightness(0.8);
+    transition: color 0.5s cubic-bezier(0.4,0,0.2,1), filter 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.logo-link:hover .logo-text-accent {
+    color: #333;
+    filter: brightness(0.8);
+    transition: color 0.5s cubic-bezier(0.4,0,0.2,1), filter 0.5s cubic-bezier(0.4,0,0.2,1);
 }
 
 header nav ul {
